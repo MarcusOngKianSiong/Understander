@@ -1,0 +1,15 @@
+body{
+    margin: 0;
+    border: 1px solid red;
+}
+
+.customisation{
+    position: absolute;
+    backdrop-filter: blur(2px);
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
