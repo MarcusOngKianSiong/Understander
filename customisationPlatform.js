@@ -1,43 +1,35 @@
-
-
-function createButton(name,text){
-    const button = document.createElement("button");
-    button.className = name;
-    button.textContent = text;
-    return button;
-}
-
 class customisationPlatform{
     constructor(){
-        let platform = this.createPlatform("customisation");
+        const platform = this.createPlatform();
     }
-    returnPlatform(){
-        return this.platform;
-    }
-    appendToPlatform(item){
-        this.platform.appendChild(item);
-    }
-    showFeatures(){
-        return this.platform.childNodes;
-    }
-    createPlatform(name){
+    createPlatform(){
         const platform = document.createElement("div");
-        platform.className = name;
+        const back = document.createElement("button");
+        const workArea = document.createElement("div");
+        const nextStep = document.createElement("button");
+        platform.className = "process";
+        back.className = "back";
+        workArea.className = "workArea";
+        nextStep.className = "nextStep";
+        back.textContent = "Back";
+        nextStep.textContent = "Next  Step"
+        platform.appendChild(back);
+        platform.appendChild(workArea);
+        platform.appendChild(nextStep);
         this.platform = platform;
     }
-}
-
-function createPlatform(){
-    const customisation = new customisationPlatform();
-    const stepTitle = document.createElement("h3");
-    stepTitle.textContent = "--step title--";
-    const stepWorkArea = document.createElement("div");
-    stepWorkArea.textContent = "--Step actions--"
-    customisation.appendToPlatform(createButton("back","Back"));
-    customisation.appendToPlatform(stepTitle)
-    customisation.appendToPlatform(stepWorkArea);
-    customisation.appendToPlatform(createButton("nextStep","Next Step: --Insert Step here"));
-    return customisation.returnPlatform()
+    modifyBackButton(func){
+        this.platform.children[0].addEventListener('click',func());
+    }
+    modifynextStepButton(func){
+        this.platform.children[2].addEventListener('click',func());
+    }
+    // DATA FORMAT: An array of required elements
+    changeWorkArea(arr){
+        arr.forEach(element => {
+            this.platform.children[1].appendChild(element)
+        }); 
+    }
 }
 
 // customisation area
