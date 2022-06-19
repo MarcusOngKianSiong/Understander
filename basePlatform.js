@@ -12,5 +12,4 @@ beginProcess.addEventListener("click",value=>{
 })
 body.addEventListener("keydown",(key)=>{
     one.navigationFeature(key.key);
-    one.updateDisplay();
 })

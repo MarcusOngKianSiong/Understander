@@ -11,10 +11,7 @@ class stepOne{
         this.keyWords = [];
         this.position = 0;
         //set up the necessary items: selecting word, display selection
-        console.log(this.requiredElements)
         this.conceptTemplate(data);
-        console.log(this.requiredElements)
-        this.displaySelection();
     }
     conceptTemplate(concept){
         const navigatingThroughConcept = document.createElement("div");
@@ -66,41 +63,6 @@ class stepOne{
             this.keyWords.push(words[this.position].textContent)
             console.log(this.keyWords)
         }
-    }
-    displaySelection(){
-        const display = document.createElement("div");
-        display.className = "displaySelection";
-        display.textContent = "No selection";
-        this.requiredElements.push(display);
-    }
-    updateDisplay(){
-        if(this.keyWords.length === 0){
-            while(this.keyWords.length!==0){
-                this.requiredElements[1].removeChild(this.requiredElements[1].firstChild);
-            }
-            this.requiredElements[1].textContent = "no keywords selected.";
-            return;
-        }
-        this.keyWords.forEach(selectedWord=>{
-            const word = document.createElement("p");
-            word.textContent = selectedWord;
-            this.requiredElements[1].appendChild(word);
-        })
-    }
-    displaySelection(){
-        const display = document.querySelector("div");
-        // display.style.display = "flex";
-        // display.style = "flex-direction: row;";
-        this.keyWords.forEach(value=>{
-            const word = document.createElement("p");
-            word.textContent = value;
-            display.appendChild(word);
-        })
-        if (this.requiredElements[1] === undefined){
-            this.requiredElements.push(display);
-            return;
-        }
-        this.requiredElements[1] = display;
     }
 }
 
