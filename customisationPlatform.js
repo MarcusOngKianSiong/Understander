@@ -1,34 +1,84 @@
+//Customisation platform takes in a concept and spits out a definition
+
 class customisationPlatform{
-    constructor(){
-        const platform = this.createPlatform();
+    constructor(baseData,basePlatform){
+        this.basePlatform = basePlatform;
+        this.customisationPlatform = null;
+        this.baseData = baseData;
+        this.stepInstance = null;
+        this.dataProcessing = {
+            "baseData": baseData,
+            "select": null,
+            "refine": null,
+            "search":null,
+            "organise": null
+        }
+        this.createPlatform();
+        this.createStepInstance();
+    }
+    getData(){
+        if(this.dataProcessing.select === null){
+            this.dataProcessing.select = this.stepInstance.getData();
+            return;
+        }
+        if(this.dataProcessing.refine === null){
+            this.dataProcessing.refine = this.stepInstance.getData();
+            return;
+        }
+        if(this.dataProcessing.search === null){
+            this.dataProcessing.refine = this.stepInstance.getData();
+            return;
+        }
+        if(this.dataProcessing.organise === null){
+            this.dataProcessing.refine = this.stepInstance.getData();
+            return;
+        }
     }
     createPlatform(){
-        const platform = document.createElement("div");
+        const customisationPlatform = document.createElement("div");
         const back = document.createElement("button");
         const workArea = document.createElement("div");
         const nextStep = document.createElement("button");
-        platform.className = "process";
+        customisationPlatform.className = "process";
         back.className = "back";
         workArea.className = "workArea";
+        workArea.tabIndex = "0";
         nextStep.className = "nextStep";
         back.textContent = "Back";
         nextStep.textContent = "Next  Step"
-        platform.appendChild(back);
-        platform.appendChild(workArea);
-        platform.appendChild(nextStep);
-        this.platform = platform;
+        customisationPlatform.appendChild(back);
+        customisationPlatform.appendChild(workArea);
+        customisationPlatform.appendChild(nextStep);
+        this.customisationPlatform = customisationPlatform
+        this.basePlatform.appendChild(this.customisationPlatform);
     }
-    modifyBackButton(func){
-        this.platform.children[0].addEventListener('click',func());
+    createStepInstance(){
+        if (this.dataProcessing.select === null){
+            console.log("selecting")
+            this.stepInstance = new selecting(this.dataProcessing.baseData,this.customisationPlatform.querySelector(".workArea"));
+            return;
+        }
+        if(this.dataProcessing.refine === null){
+            console.log("refining")
+            this.stepInstance = new refining(this.dataProcessing.select,this.customisationPlatform.querySelector(".workArea"));;
+            return;
+        }
+        // if(this.dataProcessing.search === null){
+        //     this.dataProcessing.refine = this.stepInstance.getData();
+        //     return;
+        // }
+        // if(this.dataProcessing.organise === null){
+        //     this.dataProcessing.refine = this.stepInstance.getData();
+        //     return;
+        // }
     }
-    modifynextStepButton(func){
-        this.platform.children[2].addEventListener('click',func());
+    // Remove the elements associated with the step
+    stopStepInstance(){
+        this.stepInstance.emptyWorkArea();
     }
-    // DATA FORMAT: An array of required elements
-    changeWorkArea(arr){
-        arr.forEach(element => {
-            this.platform.children[1].appendChild(element)
-        }); 
+    // Remove the elements associated with processing itself
+    stopProcessingInstance(){
+        this.basePlatform.removeChild(this.customisationPlatform)
     }
 }
 

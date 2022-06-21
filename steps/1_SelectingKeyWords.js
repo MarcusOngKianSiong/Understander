@@ -4,14 +4,31 @@
 
 // show selection
 
-class stepOne{
-    constructor(data){
+class selecting{
+    constructor(data,workArea){
         // Pass requiredElements to the platform.changeWorkArea()
+        this.data = data;
+        this.workArea = workArea;
         this.requiredElements = [];
         this.keyWords = [];
         this.position = 0;
         //set up the necessary items: selecting word, display selection
         this.conceptTemplate(data);
+        this.populateWorkArea();
+    }
+    getData(){
+        return this.keyWords;
+    }
+    emptyWorkArea(){
+        for (let i = 0;i<this.requiredElements.length;i++){
+            this.workArea.removeChild(this.requiredElements[i]);
+        }
+        console.log(this.workArea);
+    }
+    populateWorkArea(){
+        this.requiredElements.forEach(feature=>{
+            this.workArea.appendChild(feature);
+        })
     }
     conceptTemplate(concept){
         const navigatingThroughConcept = document.createElement("div");
@@ -56,12 +73,10 @@ class stepOne{
                 const word = words[this.position].textContent;
                 const wordIndex = this.keyWords.indexOf(word)
                 this.keyWords.splice(wordIndex,1);
-                console.log(this.keyWords);
                 return;
             };
             words[this.position].style.background = "yellow";
-            this.keyWords.push(words[this.position].textContent)
-            console.log(this.keyWords)
+            this.keyWords.push(words[this.position].textContent);
         }
     }
 }
