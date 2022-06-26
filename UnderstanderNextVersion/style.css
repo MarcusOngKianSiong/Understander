@@ -1,0 +1,24 @@
+.base{
+    border: 1px solid yellowgreen;
+}
+.customisation{
+    border: 1px solid red;
+    position: absolute;
+    backdrop-filter: blur(2px);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    z-index: 1;
+}
+.step{
+    border: 1px solid blue;
+}
+.steps{
+    border: 1px solid blueviolet;
+}
+.selectKeywords{
+    display: flex;
+}
+.word:hover{
+    font-weight: bold;
+}
