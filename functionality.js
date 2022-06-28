@@ -13,6 +13,7 @@ const editSearchTerm = document.querySelector(".editSearchTerm");
 const defining = document.querySelector(".search");
 const table = document.querySelector(".searchTable")
 const header = document.querySelector(".header")
+const construct = document.querySelector(".construct")
 
 let data = {
     concept: null,
@@ -143,10 +144,12 @@ function search(){
     headerRow.appendChild(headerSelectedDefinition);
     headerRow.appendChild(headerPossibleDefinitions);
     table.appendChild(headerRow);
-    // Create a row for every search term + fill in data on the first column
+    // Create a row for every search term + fill in data on the first column + write the definition based on 
+    // that search term
     for (const key in data.search){
         const tableRow = document.createElement("tr");
         const tableHeight = document.createElement("th");
+        tableHeight.setAttribute("id",key)
         const text = document.createElement("p");
         console.log("here", data.search[key])
         text.textContent = data.search[key];
@@ -155,24 +158,60 @@ function search(){
         table.appendChild(tableRow);
         // The other sections other than the search terms
         const selectedDefinitionSection = document.createElement("th");
+        selectedDefinitionSection.setAttribute("id",key)
         tableRow.appendChild(selectedDefinitionSection);
         const possibleDefinitionSection = document.createElement("th");
         tableRow.appendChild(possibleDefinitionSection);
-        possibleDefinitionSection.addEventListener("click",response=>{
-            
+        fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${data.search[key]}`)
+        .then(response=>{
+            return response.json();
         })
-        
-        // Look for + display definition of the word (If the return value does not have a title, then display it);
+        .then(response=>{
+            if(response.title){
+                possibleDefinitionSection.textContent = response.title;
+            }else{
+                const definitions = response[0].meanings[0].definitions[0].definition;
+                possibleDefinitionSection.textContent = definitions;
+            }
+        })
+        // When you click the possible definition given, the definition is placed in the selected definition
+        // and stored in the database
+        possibleDefinitionSection.addEventListener("click",response=>{
+                selectedDefinitionSection.textContent = possibleDefinitionSection.textContent;
+                // STore it in the database
+                data.search[selectedDefinitionSection.getAttribute("id")] = selectedDefinitionSection.textContent;
+                console.log("from possible definition: ",selectedDefinitionSection.getAttribute("id"),data.search);
+        })
 
+        // The selected definition can be edited
+        selectedDefinitionSection.addEventListener("click",response=>{
+            if(selectedDefinitionSection.querySelector("input") === null){
+                const input = document.createElement("input");
+                input.value = selectedDefinitionSection.textContent;
+                selectedDefinitionSection.textContent = "";
+                selectedDefinitionSection.appendChild(input);
+                input.addEventListener("keydown",response=>{
+                    if(response.code === "Enter"){
+                        // Save input to database
+                        data.search[selectedDefinitionSection.getAttribute("id")] = input.value;
+                        console.log("store data from input: ",data.search[selectedDefinitionSection.getAttribute("id")]);
+                        // Show the new input
+                        selectedDefinitionSection.textContent = data.search[selectedDefinitionSection.getAttribute("id")];
+                        selectedDefinitionSection.removeChild(input);
+                    }
+                })
+            }
+        })
     }
-    // Create 
-    
 }
-function definition(word,element){
-    
-}
-function construct(){
 
+function constructing(){
+    // set up data
+    data.construct = {};
+    //display concept
+    const concept = document.createElement("div");
+    concept.textContent = data.concept;
+    construct.appendChild(concept);
 }
 
 beginProcess.addEventListener("click",response=>{
@@ -181,10 +220,12 @@ beginProcess.addEventListener("click",response=>{
         body.appendChild(customisation);
         data.concept = value;
         identify();
+        constructing()
     }else{
         conceptField.style.border = "1px solid red";
         conceptField.setAttribute("placeholder","cannot be empty");
     }
+    
 })
 
 body.addEventListener("click",response=>{
@@ -200,10 +241,7 @@ backButton.addEventListener("click",response=>{
         selectKeywords.removeChild(selectKeywords.firstChild);
     }
 
-    fetch(`https://dictionaryapi.dev/api/v2/entries/en/${"information"}`)
-            .then(response=>{
-                console.log(response);
-    })
+
 })
 
 function init(){
