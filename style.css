@@ -23,3 +23,6 @@
     display: flex;
     
 }
+table,tr,th{
+    border: 1px solid red;
+}

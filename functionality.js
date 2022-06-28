@@ -9,7 +9,10 @@ const steps = document.querySelector('.steps');
 const step = steps.querySelectorAll('.step');
 const selectKeywords = document.querySelector('.selectKeywords');
 const displaySearchTerm = document.querySelector('.displaySearchTerms');
-const editSearchTerm = document.querySelector(".editSearchTerm")
+const editSearchTerm = document.querySelector(".editSearchTerm");
+const defining = document.querySelector(".search");
+const table = document.querySelector(".searchTable")
+const header = document.querySelector(".header")
 
 let data = {
     concept: null,
@@ -63,7 +66,7 @@ function refine(){
     data.identify.forEach(word=>{
         data.define[word] = word;
     })
-    console.log(data.define);
+    
     // If there are elements in displaySearchTerms, remove them
     if(displaySearchTerm.firstChild){
         while(displaySearchTerm.firstChild){
@@ -112,18 +115,62 @@ function refine(){
         refreshingElement.setAttribute("class","searchTerm");
         refreshingElement.setAttribute("id",elementIId)
         displaySearchTerm.appendChild(refreshingElement);
-        console.log(data.define)
+        
+        search();
     })    
 }
 
 function search(){
+    // set up or update data storage
+    data.search = {};
+    for (const key in data.define){
+        data.search[key] = data.define[key];
+    }
+    console.log("checking for data: ", data.search)
+    // Remove all table elements
+    while(table.firstChild){
+        table.removeChild(table.firstChild);
+    }
+    // Create header row
+    const headerRow = document.createElement("tr");
+    const headerSearchTerm = document.createElement("th");
+    const headerSelectedDefinition = document.createElement("th");
+    const headerPossibleDefinitions = document.createElement("th");
+    headerSearchTerm.textContent = "Search Term";
+    headerSelectedDefinition.textContent = "Selected Definition";
+    headerPossibleDefinitions.textContent = "Possible Definition";
+    headerRow.appendChild(headerSearchTerm);
+    headerRow.appendChild(headerSelectedDefinition);
+    headerRow.appendChild(headerPossibleDefinitions);
+    table.appendChild(headerRow);
+    // Create a row for every search term + fill in data on the first column
+    for (const key in data.search){
+        const tableRow = document.createElement("tr");
+        const tableHeight = document.createElement("th");
+        const text = document.createElement("p");
+        console.log("here", data.search[key])
+        text.textContent = data.search[key];
+        tableHeight.appendChild(text);
+        tableRow.appendChild(tableHeight);
+        table.appendChild(tableRow);
+        // The other sections other than the search terms
+        const selectedDefinitionSection = document.createElement("th");
+        tableRow.appendChild(selectedDefinitionSection);
+        const possibleDefinitionSection = document.createElement("th");
+        tableRow.appendChild(possibleDefinitionSection);
+        possibleDefinitionSection.addEventListener("click",response=>{
+            
+        })
+        
+        // Look for + display definition of the word (If the return value does not have a title, then display it);
+
+    }
+    // Create 
     
 }
-
-function search(){
-
+function definition(word,element){
+    
 }
-
 function construct(){
 
 }
@@ -152,11 +199,17 @@ backButton.addEventListener("click",response=>{
     while(selectKeywords.firstChild){
         selectKeywords.removeChild(selectKeywords.firstChild);
     }
+
+    fetch(`https://dictionaryapi.dev/api/v2/entries/en/${"information"}`)
+            .then(response=>{
+                console.log(response);
+    })
 })
 
 function init(){
     body.removeChild(customisation);
     refine();
+    search();
 }
 
 init()
