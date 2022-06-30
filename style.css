@@ -26,3 +26,7 @@
 table,tr,th{
     border: 1px solid red;
 }
+.displayConceptAtConstruct{
+    display: flex;
+    flex-direction: row;
+}

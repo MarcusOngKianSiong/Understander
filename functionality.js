@@ -43,6 +43,9 @@ function identify(){
     // Append each element to the parent
     elements.forEach(element=>{
         selectKeywords.appendChild(element);
+        const whitespace = document.createElement("p");
+        whitespace.innerHTML = '&nbsp';
+        selectKeywords.appendChild(whitespace);
     })
     // Add event listener to each element
     elements.forEach(element=>{
@@ -97,7 +100,7 @@ function refine(){
                 element.style.border = "1px solid red";
             }
             editSearchTerm.value = element.textContent;
-            editSearchTerm.setAttribute("id",element.getAttribute("id"))
+            editSearchTerm.setAttribute("id",element.getAttribute("id"));
         })
     })
 
@@ -116,7 +119,6 @@ function refine(){
         refreshingElement.setAttribute("class","searchTerm");
         refreshingElement.setAttribute("id",elementIId)
         displaySearchTerm.appendChild(refreshingElement);
-        
         search();
     })    
 }
@@ -181,6 +183,7 @@ function search(){
                 // STore it in the database
                 data.search[selectedDefinitionSection.getAttribute("id")] = selectedDefinitionSection.textContent;
                 console.log("from possible definition: ",selectedDefinitionSection.getAttribute("id"),data.search);
+                constructing();
         })
 
         // The selected definition can be edited
@@ -201,6 +204,7 @@ function search(){
                     }
                 })
             }
+            constructing();
         })
     }
 }
@@ -208,10 +212,52 @@ function search(){
 function constructing(){
     // set up data
     data.construct = {};
+
+    // Remove all elements in constructing section
+    while(construct.firstChild){
+        construct.removeChild(construct.firstChild);
+    }
+
     //display concept
-    const concept = document.createElement("div");
-    concept.textContent = data.concept;
-    construct.appendChild(concept);
+    const splittingConcept = data.concept.split(" ");
+    const elements = []
+    const conceptSection = document.createElement("div");
+    conceptSection.setAttribute("class","displayConceptAtConstruct");
+    splittingConcept.forEach(word=>{
+        const element = document.createElement("p");
+        element.textContent = word;
+        elements.push(element);
+        if(data.identify.includes(word)){
+            element.style.backgroundColor = "yellow";
+        }
+    })
+    
+    elements.forEach(element=>{
+        conceptSection.appendChild(element);
+        const whitespace = document.createElement("p");
+        whitespace.innerHTML = '&nbsp';
+        conceptSection.appendChild(whitespace)
+    })
+    construct.appendChild(conceptSection);
+    
+    // Display search term
+    const definitions = document.createElement("table");
+    const headerRow = document.createElement("tr");
+    const headerKeyword = document.createElement("th");
+    const headerDefinition = document.createElement("th");
+    headerKeyword.textContent = "Keyword";
+    headerDefinition.textContent = "Definition";
+    headerRow.appendChild(headerKeyword);
+    headerRow.appendChild(headerDefinition);
+    // Append data to table
+    for(let i = 0;i<data.identify.length;i++){
+        const row = document.createElement("tr");
+        const keywordColumn = document.createElement("th");
+        const definitionColumn = document.createElement("th");
+        keywordColumn.textContent = data.identify[i];
+        //definitionColumn.textContent = data.search[];
+    }
+    
 }
 
 beginProcess.addEventListener("click",response=>{
@@ -225,11 +271,6 @@ beginProcess.addEventListener("click",response=>{
         conceptField.style.border = "1px solid red";
         conceptField.setAttribute("placeholder","cannot be empty");
     }
-    
-})
-
-body.addEventListener("click",response=>{
-
 })
 
 backButton.addEventListener("click",response=>{
@@ -241,7 +282,7 @@ backButton.addEventListener("click",response=>{
         selectKeywords.removeChild(selectKeywords.firstChild);
     }
 
-
+    
 })
 
 function init(){
@@ -250,7 +291,7 @@ function init(){
     search();
 }
 
-init()
+init();
 
 body.addEventListener('click',response=>{
     console.log("data: ",data)
