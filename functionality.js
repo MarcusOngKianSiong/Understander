@@ -32,6 +32,12 @@ let theFourSteps = {
 function identify(){
     data.identify = [];
     const words = data.concept.split(" ");
+
+    // remove all elements in identify section
+    while(selectKeywords.firstChild){
+        selectKeywords.removeChild(selectKeywords.firstChild);
+    }
+    
     // Create elements and attach each word to each element
     let elements = [];
     words.forEach(word => {
@@ -120,6 +126,7 @@ function refine(){
         refreshingElement.setAttribute("id",elementIId)
         displaySearchTerm.appendChild(refreshingElement);
         search();
+        constructing();
     })    
 }
 
@@ -136,6 +143,7 @@ function search(){
     }
     // Create header row
     const headerRow = document.createElement("tr");
+    headerRow.className = "headings";
     const headerSearchTerm = document.createElement("th");
     const headerSelectedDefinition = document.createElement("th");
     const headerPossibleDefinitions = document.createElement("th");
@@ -185,7 +193,7 @@ function search(){
                 console.log("from possible definition: ",selectedDefinitionSection.getAttribute("id"),data.search);
                 constructing();
         })
-
+        
         // The selected definition can be edited
         selectedDefinitionSection.addEventListener("click",response=>{
             if(selectedDefinitionSection.querySelector("input") === null){
@@ -218,45 +226,45 @@ function constructing(){
         construct.removeChild(construct.firstChild);
     }
 
-    //display concept
-    const splittingConcept = data.concept.split(" ");
-    const elements = []
-    const conceptSection = document.createElement("div");
-    conceptSection.setAttribute("class","displayConceptAtConstruct");
-    splittingConcept.forEach(word=>{
-        const element = document.createElement("p");
-        element.textContent = word;
-        elements.push(element);
-        if(data.identify.includes(word)){
-            element.style.backgroundColor = "yellow";
-        }
-    })
-    
-    elements.forEach(element=>{
-        conceptSection.appendChild(element);
-        const whitespace = document.createElement("p");
-        whitespace.innerHTML = '&nbsp';
-        conceptSection.appendChild(whitespace)
-    })
-    construct.appendChild(conceptSection);
-    
-    // Display search term
-    const definitions = document.createElement("table");
-    const headerRow = document.createElement("tr");
-    const headerKeyword = document.createElement("th");
-    const headerDefinition = document.createElement("th");
-    headerKeyword.textContent = "Keyword";
-    headerDefinition.textContent = "Definition";
-    headerRow.appendChild(headerKeyword);
-    headerRow.appendChild(headerDefinition);
-    // Append data to table
-    for(let i = 0;i<data.identify.length;i++){
-        const row = document.createElement("tr");
-        const keywordColumn = document.createElement("th");
-        const definitionColumn = document.createElement("th");
-        keywordColumn.textContent = data.identify[i];
-        //definitionColumn.textContent = data.search[];
+    // Display search terms
+    const displaySearchTerms = document.createElement("div");
+    displaySearchTerms.className = "searchTerms";
+    let words = [];
+    for(const key in data.search){
+        const word = document.createElement("p");
+        word.setAttribute("id",key);
+        words.push(word);
+        word.textContent = key;
+        displaySearchTerms.appendChild(word);
+        word.setAttribute("draggable","true");
+        word.addEventListener("dragstart",response=>{
+            response.dataTransfer.setData("elementID",response.target.id);
+            console.log(response.dataTransfer.getData("elementID"));
+        })
     }
+    construct.appendChild(displaySearchTerms);
+    
+    // show an area
+    const definitionArea = document.createElement("div");
+    definitionArea.setAttribute("class","definitionArea");
+    definitionArea.style.height = "20%";
+    definitionArea.addEventListener("dragenter",response=>{
+        response.preventDefault();
+    });
+    definitionArea.addEventListener("dragover",response=>{
+        response.preventDefault();
+    });
+    definitionArea.addEventListener("drop",response=>{
+        const searchTerm = response.dataTransfer.getData("elementID");
+        const theDefinition = data.search[searchTerm];
+        const termPlusDefinition = document.createElement("div");
+        termPlusDefinition.textContent = searchTerm+': '+theDefinition;
+        definitionArea.appendChild(termPlusDefinition);
+    });
+    construct.appendChild(definitionArea);
+
+    const creatingWholeDefinition = document.createElement("input");
+    construct.appendChild(creatingWholeDefinition);
     
 }
 
@@ -266,7 +274,9 @@ beginProcess.addEventListener("click",response=>{
         body.appendChild(customisation);
         data.concept = value;
         identify();
-        constructing()
+        refine();
+        search();
+        constructing();
     }else{
         conceptField.style.border = "1px solid red";
         conceptField.setAttribute("placeholder","cannot be empty");
@@ -281,8 +291,29 @@ backButton.addEventListener("click",response=>{
     while(selectKeywords.firstChild){
         selectKeywords.removeChild(selectKeywords.firstChild);
     }
-
     
+})
+
+nextStep.addEventListener("click",response=>{
+    const finalDefinition = construct.querySelector("input");
+    if(finalDefinition.value === ""){
+        finalDefinition.style.borderColor = "red";
+        finalDefinition.setAttribute("placeholder","A final definition needs to be placed");
+        return;
+    }
+    data.construct = finalDefinition.value
+
+    const displayFinalDefinition = document.createElement("div");
+    displayFinalDefinition.className = "definitionProduct";
+    displayFinalDefinition.textContent = data.construct;
+    body.appendChild(displayFinalDefinition);
+    body.removeChild(customisation);
+    data.concept = null;
+    data.construct = null
+    data.search = null;
+    data.define = null;
+    data.identify = null;
+
 })
 
 function init(){

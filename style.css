@@ -6,27 +6,129 @@
     position: absolute;
     backdrop-filter: blur(2px);
     width: 100vw;
-    height: 100vh;
     top: 0;
     z-index: 1;
 }
-.step{
-    border: 1px solid blue;
-}
-.steps{
-    border: 1px solid blueviolet;
-}
+
+
 .selectKeywords{
     display: flex;
 }
 .searchTermsAndRefinedSearchTerms{
     display: flex;
-    
 }
 table,tr,th{
-    border: 1px solid red;
+    border: 1px solid black;
 }
 .displayConceptAtConstruct{
     display: flex;
     flex-direction: row;
+}
+.definitionArea{
+    border: 1px solid red;
+    width: 100%;
+    height: 100px;
+}
+table{
+    margin: auto;
+    width: 80%;
+}
+th{
+  font-weight: normal;  
+}
+header{
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+
+.base{
+    margin: auto;
+    margin-top: 10%;
+    width: 60%;
+    border-radius: 25px;
+    padding: 5%;
+}
+.definitionProduct{
+    border: red 1px solid;
+   
+    margin: auto;
+    margin-top: 1%;
+    width: 60%;
+    border-radius: 25px;
+    padding: 1%;
+}
+.customisation{
+    left: 30%;
+    max-width: 1000px;
+    margin: auto;
+    
+}
+.identificationGroup,.refineGroup,.searchGroup,.constructGroup{
+    background-color: gainsboro;
+}
+.identificationGroup{
+    border: 1px solid red;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
+    border-radius: 25px;
+    padding: 5%;
+    box-shadow: 1px 1px 20px 10px red;
+}
+.refineGroup{
+    border: 1px solid red;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
+    border-radius: 25px;
+    padding: 5%;
+    box-shadow: 1px 1px 20px 10px blue;
+}
+.searchGroup{
+    border: 1px solid red;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
+    border-radius: 25px;
+    padding: 5%;
+    box-shadow: 1px 1px 20px 10px yellow;
+}
+.headings{
+    border: black 1px solid;
+}
+.constructGroup{
+    border: 1px solid red;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
+    border-radius: 25px;
+    padding: 5%;
+    box-shadow: 1px 1px 20px 10px green;
+}
+.definitionArea{
+    border: none;
+}
+.nextStep,.back{
+    
+    border: 1px solid black;
+    width: 80%;
+    height: 80%;
+    margin: 5%;
+    border-radius: 25px;
+
+}
+.back:hover,.nextStep:hover{
+    background-color: grey;
+}
+table,tr,th{
+    border-radius: 25px;
+}
+.searchTerms,.definitionArea{
+    border: 1px solid black;
+}
+.definitionArea{
+    
 }

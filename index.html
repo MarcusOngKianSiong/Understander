@@ -17,31 +17,43 @@
         <button class="beginProcess">Begin Process</button>
     </div>
     <div class="customisation">
+
         <button class="back">Back</button>
         <div class="steps">
-            <div class="step identify">
-                <div class="selectKeywords">
+            <div class="identificationGroup">
+                <header>Identify keywords</header> 
+                <div class="step identify">
+                    <div class="selectKeywords">
                     
+                    </div>
                 </div>
             </div>
-            <div class="step refine">
-                <div class="searchTermsAndRefinedSearchTerms">
-                    <ul class="refine displaySearchTerms">
+            <div class="refineGroup">
+                <header>Refine search terms</header> 
+                <div class="step refine">
+                    <div class="searchTermsAndRefinedSearchTerms">
+                            <ul class="refine displaySearchTerms">
                         
-                    </ul>
+                            </ul>
                     
+                    </div>
+                    <input type="text" class="editSearchTerm">
                 </div>
-                <input type="text" class="editSearchTerm">
             </div>
-            <div class="step search">
-                <table class="searchTable">
-                </table>
+            <div class="searchGroup">
+                <header>Perform and record search</header> 
+                <div class="step search">
+                    <table class="searchTable">
+                    </table>
+                </div>
             </div>
-            <div class="step construct">
+            <div class="constructGroup">
+                <header>Construct definition</header> 
+                <div class="step construct">
                 
-                <input type="text">
+                    <input type="text" placeholder="Construct your definition">
+                </div>
             </div>
-        </div>
         <button class="nextStep">next step</button>
     </div>
     <div class="one" id="one"></div>
