@@ -11,9 +11,9 @@ const selectKeywords = document.querySelector('.selectKeywords');
 const displaySearchTerm = document.querySelector('.displaySearchTerms');
 const editSearchTerm = document.querySelector(".editSearchTerm");
 const defining = document.querySelector(".search");
-const table = document.querySelector(".searchTable")
-const header = document.querySelector(".header")
-const construct = document.querySelector(".construct")
+const table = document.querySelector(".searchTable");
+const header = document.querySelector(".header");
+const construct = document.querySelector(".construct");
 
 let data = {
     concept: null,
@@ -65,6 +65,8 @@ function identify(){
                 data.identify.push(element.textContent);
             }
             refine(); 
+            search();
+            constructing();
         })
     })
 }
@@ -73,9 +75,12 @@ const refinedSearchTerm = [];
 function refine(){
     // Set up the storage to store the refined keywords
     data.define = {};
-    data.identify.forEach(word=>{
-        data.define[word] = word;
-    })
+    if(data.identify !== null){
+        data.identify.forEach(word=>{
+            data.define[word] = word;
+        })
+    }
+    
     
     // If there are elements in displaySearchTerms, remove them
     if(displaySearchTerm.firstChild){
@@ -85,13 +90,15 @@ function refine(){
     }
     //Create a list of elements containing the search term
     const searchTerms = [];
-    data.identify.forEach(keyword=>{
-        const element = document.createElement("li");
-        element.textContent = keyword;
-        element.setAttribute("class","searchTerm");
-        element.setAttribute("id",keyword)
-        searchTerms.push(element);
-    })
+    if(data.identify !== null){
+        data.identify.forEach(keyword=>{
+            const element = document.createElement("li");
+            element.textContent = keyword;
+            element.setAttribute("class","searchTerm");
+            element.setAttribute("id",keyword)
+            searchTerms.push(element);
+        })
+    }
     //Append the list of elements to displaySearchTerms
     searchTerms.forEach(terms=>{
         displaySearchTerm.appendChild(terms);
