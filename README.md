@@ -30,8 +30,9 @@ Main strategy is divide and conquer. The project is split into two components wi
 https://marcusongkiansiong.github.io/Understander/
 
 **Problems**
-1. Code organisation 
-Put everything in distinct functions and know where are the input output points
+1. Code organisation
+    - Did not have a proper framework to structure the code
+    - Brute force my way until I see some structure, then apply that structure to other parts of the code.
 
-2. Bad solutioning
-Solution design was not well thought out, thereby causing a lot of paralysis throughout the process.
+2. Bad conceptual solutioning
+    - Solution design was not well thought out, thereby causing a lot of slowdown and stop during the process.
