@@ -36,4 +36,6 @@ https://marcusongkiansiong.github.io/Understander/
 
 2. Bad conceptual solutioning
     - Problem: Solution design was not well thought out, thereby causing a lot of slowdown and stops during execution because you do not know what to do.
-    - Solution: Sit and think until something comes up.
+    - Solution: 
+        - Sit and think until something comes up
+        - reference what already exist first when learning
