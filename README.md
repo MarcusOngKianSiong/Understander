@@ -31,8 +31,9 @@ https://marcusongkiansiong.github.io/Understander/
 
 **Problems**
 1. Code organisation
-    - Did not have a proper framework to structure the code
-    - Brute force my way until I see some structure, then apply that structure to other parts of the code.
+    - Problem: Did not have a proper framework to structure the code
+    - Solution: Brute force my way (Keep asking what is the next step and do it) until I see some structure, then apply that structure to other parts of the code.
 
 2. Bad conceptual solutioning
-    - Solution design was not well thought out, thereby causing a lot of slowdown and stop during the process.
+    - Problem: Solution design was not well thought out, thereby causing a lot of slowdown and stops during execution because you do not know what to do.
+    - Solution: Sit and think until something comes up.
