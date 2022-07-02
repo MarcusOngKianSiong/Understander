@@ -2,17 +2,33 @@
 An app that assist in breaking down complex concepts to make it understandable.
 
 **Purpose of this app**
+To facilitate the process of understanding complex concepts. When a concept is not understood, it is usually because of specific words or smaller concepts within that concept that is not understood. Therefore, to understand the concept, one needs to understand those words or smaller concepts within that concept and link them together.
 
 **How this app works**
-
+Step 1: Input the concept
+Step 2: Look at the Identify Keyword section and click on the keyword within the concept
+Step 3: Look at the Refine Search Term section and click on the keyword you want to modify and modify it
+Step 4: A table will be shown showing the refined search terms and possible definition. You can either write down the search term yourself or click on the provided definition to use it.
+Step 5: A display will be shown listing the original keywords and you can drag and drop into a section below so that you can have the relevant definitions in place to write down a more specific definition. 
+Step 6: Click next step to save the definition and display it below the place where you input the concept.
 
 **Technologies used**
-
+HTML, CSS, Javascript
+https://dictionaryapi.dev/
 
 **Approach taken**
+Main strategy is divide and conquer. The project is split into two components with sub-components within them:
+1. Base
+    - Input concept
+    - Display reconstructed definition
+2. Process
+    - Identify keywords
+    - Refine search terms
+    - Search and record
+    - Construct definition
 
 **Link to live site**
-
-**Installation instructions**
+https://marcusongkiansiong.github.io/Understander/
 
 **unsolved problem**
+
